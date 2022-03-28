@@ -166,28 +166,12 @@ class App extends React.Component<AppProps, AppState> {
             price
           );
 
-        // const response = await FirebaseClient.addDocument(
-        //   'asset_sale_contracts',
-        //   {
-        //     seller: sellerAccount,
-        //     asset_index: assetIndex,
-        //     price: price,
-        //     contract_result: contractResult,
-        //     status: 'pending',
-        //     created: serverTimestamp(),
-        //     is_main: ChainClient.connectionIsMain,
-        //   }
-        // );
-
         const confirmedTxn = await this.transactionService.sellAsset({
           sellerAccount,
           assetIndex,
           contractResult,
         });
-        // FirebaseClient.updateDocument('asset_sale_contracts', response.id, {
-        //   status: 'active',
-        //   updated: serverTimestamp(),
-        // });
+
         this.setState({ contractResult });
         console.log(confirmedTxn);
       } catch (error) {
