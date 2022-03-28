@@ -1,9 +1,11 @@
 import WalletConnect from '@walletconnect/client';
 import { IInternalEvent } from '@walletconnect/types';
 import React from 'react';
+import styled from 'styled-components';
 import './App.css';
+import BuyButton from './components/BuyButton';
 import Header from './components/Header';
-import WalletConnectButton from './components/WalletButton';
+import Logo from './components/Logo';
 import WalletService from './services/WalletService';
 import { Chain } from './utils';
 
@@ -40,16 +42,23 @@ const INITIAL_STATE: AppState = {
   // assets: [],
 };
 
+const SBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     const connector = new WalletService().connector;
-
+    const { connected, accounts } = connector;
     this.state = {
       ...INITIAL_STATE,
       connector,
-      accounts: connector.accounts,
-      address: connector.accounts[0],
+      connected,
+      accounts,
+      address: accounts[0],
     };
     this.subscribeToWalletEvents();
   }
@@ -94,13 +103,11 @@ class App extends React.Component<AppProps, AppState> {
 
   onConnect = async (payload: IInternalEvent) => {
     const { accounts } = payload.params[0];
-
     await this.setState({
       connected: true,
       accounts,
       address: accounts[0],
     });
-    console.log(this.state);
     // await this.getAccountAssets();
   };
 
@@ -126,12 +133,26 @@ class App extends React.Component<AppProps, AppState> {
   //   }
   // };
 
+  killSession = async () => {
+    const { connector } = this.state;
+    if (connector) connector.killSession();
+    await this.setState({ ...INITIAL_STATE });
+  };
+
   render() {
-    console.log(this.state);
     return (
       <div>
-        <Header></Header>
-        <WalletConnectButton address={this.state.address}></WalletConnectButton>
+        <Header
+          address={this.state.address}
+          connector={this.state.connector}
+          killSession={this.killSession}
+        ></Header>
+        <SBody>
+          <Logo></Logo>
+          <div style={{ marginTop: '1rem' }}>
+            <BuyButton address={this.state.address} price={100}></BuyButton>
+          </div>
+        </SBody>
       </div>
     );
   }
