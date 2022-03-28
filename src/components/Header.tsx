@@ -6,7 +6,7 @@ import { SButton, SLink } from './consts';
 
 interface HeaderProps {
   address: string;
-  connector: WalletConnect | null;
+  connector: WalletConnect;
   killSession: () => {};
 }
 
@@ -20,7 +20,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   connector,
   killSession,
 }: HeaderProps) => {
-  const connectWallet = async () => connector?.createSession();
+  const connectWallet = async () => connector.createSession();
 
   return (
     <div className='tr'>

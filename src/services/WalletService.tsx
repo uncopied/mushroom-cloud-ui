@@ -32,7 +32,7 @@ import { BRIDGE } from '../utils';
 //   return signedTxns;
 // };
 
-export default class WalletConnectService {
+export default class WalletService {
   connector = new WalletConnect({
     bridge: BRIDGE,
     qrcodeModal: QRCodeModal,
@@ -51,9 +51,9 @@ export default class WalletConnectService {
       }
       return result;
     });
-
     const request = formatJsonRpcRequest('algo_signTxn', [txnsToSign]);
     const response = await this.connector.sendCustomRequest(request);
+
     const signedTxns = response.map((element: any) => {
       return element ? new Uint8Array(Buffer.from(element, 'base64')) : null;
     });
