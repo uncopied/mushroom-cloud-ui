@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import algo_dark from '../assets/algo_dark.svg';
-import { SButton, SButtonText } from './consts';
+import { SButton } from '../utils';
 
 const algoStyleSmall = {
   height: '1rem',
@@ -9,101 +9,21 @@ const algoStyleSmall = {
 
 interface BuyButtonProps {
   price: number;
-  buyAsset: () => {};
-  putOnSale: () => {};
+  onBuyAsset: () => {};
 }
 
 const BuyButton: FunctionComponent<BuyButtonProps> = ({
   price,
-  buyAsset,
-  putOnSale,
+  onBuyAsset,
 }) => {
   return (
-    <div>
-      <SButton style={{ marginRight: '1rem' }} onClick={putOnSale}>
-        Put on Sale
-      </SButton>
-      <SButton className='pointer-fade' onClick={buyAsset}>
-        {' '}
-        <SButtonText>
-          {price}
-          <img style={algoStyleSmall} src={algo_dark} alt='algos' />
-        </SButtonText>
-      </SButton>
-    </div>
+    <SButton className='pointer-fade' onClick={onBuyAsset}>
+      <div className='flex'>
+        {price}
+        <img style={algoStyleSmall} src={algo_dark} alt='algos' />
+      </div>
+    </SButton>
   );
 };
 
 export default BuyButton;
-
-// import React from 'react';
-// import algo_dark from '../assets/algo_dark.svg';
-// import WalletConnectService from '../services/WalletService';
-// import { SButton, SButtonText } from './consts';
-
-// interface BuyButtonProps {
-//   price: number;
-//   address: string;
-// }
-
-// interface BuyButtonState {
-//   loading: boolean;
-// }
-
-// const algoStyleSmall = {
-//   height: '1rem',
-//   marginLeft: '0.2rem',
-// };
-
-// class BuyButton extends React.Component<BuyButtonProps, BuyButtonState> {
-//   constructor(props: BuyButtonProps) {
-//     super(props);
-//     this.state = { loading: false };
-//   }
-
-//   onClickBuy = async () => {
-//     const account = this.props.address;
-//     if (!account) {
-//       new WalletConnectService().connector.createSession();
-//       return;
-//     }
-//     this.setState({ loading: true });
-//     try {
-//       // await TransactionClient.lotteryGameCall(account, this.props.game);
-//       // let tempState = this.state.thisPlayState.slice();
-//       // if (tempState.length === this.props.game['wagers']) {
-//       //   this.setState({
-//       //     thisPlayState: [this.props.address],
-//       //   });
-//       // } else {
-//       //   tempState.push(this.props.address);
-//       //   this.setState({
-//       //     thisPlayState: tempState,
-//       //   });
-//       // }
-//     } catch (error) {
-//       console.error(error);
-//     }
-//     this.setState({ loading: false });
-//   };
-//   render() {
-//     return (
-//       <SButton
-//         className='pointer-fade'
-//         onClick={this.onClickBuy}
-//         disabled={this.state.loading}
-//       >
-//         {this.state.loading ? (
-//           <span>Loading...</span>
-//         ) : (
-//           <SButtonText>
-//             {this.props.price}
-//             <img style={algoStyleSmall} src={algo_dark} alt='algos' />
-//           </SButtonText>
-//         )}
-//       </SButton>
-//     );
-//   }
-// }
-
-// export default BuyButton;

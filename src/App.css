@@ -1,29 +1,12 @@
 html,
 body {
-  margin: 1rem;
+  margin: 0.5rem;
   background-color: #282c34;
   color: white;
 }
 
-.pointer {
-  cursor: pointer;
-}
-
-.pointer-fade:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-.tr {
-  text-align: right;
-}
-
-.flex { display: flex; }
-.flex-column  { flex-direction: column; }
-
 .app-logo {
-  pointer-events: none;
-  max-width: 75%;
+  max-width: 2rem;
 }
 
 @media (prefers-reduced-motion: no-preference) {

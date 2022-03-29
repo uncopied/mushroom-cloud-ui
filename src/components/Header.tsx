@@ -1,8 +1,9 @@
 import WalletConnect from '@walletconnect/client';
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
+import logo from '../../src/logo.svg';
 import { ellipseAddress } from '../utils';
-import { SButton, SLink } from './consts';
+import { SButton } from '../utils';
 
 interface HeaderProps {
   address: string;
@@ -15,6 +16,11 @@ const SAddress = styled.span`
   color: aqua;
 `;
 
+const SLogo = styled.div`
+  font-weight: bold;
+  width: 50%;
+`;
+
 const Header: FunctionComponent<HeaderProps> = ({
   address,
   connector,
@@ -23,13 +29,17 @@ const Header: FunctionComponent<HeaderProps> = ({
   const connectWallet = async () => connector.createSession();
 
   return (
-    <div className='tr'>
+    <div className='flex items-start justify-between mb5'>
+      <SLogo className='flex items-center f4'>
+        <img src={logo} className='app-logo mr2' alt='logo' />
+        Mushroom Cloud NFT
+      </SLogo>
       {address ? (
-        <div className='flex flex-column'>
+        <div className='flex flex-column tr'>
           <SAddress>{ellipseAddress(address)}</SAddress>
-          <SLink className='pointer-fade' onClick={killSession}>
+          <span className='pointer-fade' onClick={killSession}>
             Disconnect
-          </SLink>
+          </span>
         </div>
       ) : (
         <SButton className='pointer-fade' onClick={connectWallet}>
